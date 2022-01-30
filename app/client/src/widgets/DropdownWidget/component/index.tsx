@@ -245,6 +245,14 @@ class DropDownComponent extends React.Component<
   };
 
   componentDidUpdate = (prevProps: DropDownComponentProps) => {
+    console.log(
+      this.props,
+      this.state,
+      "HERE",
+      !_.isEmpty(this.props.options) &&
+        this.props.selectedIndex !== undefined &&
+        this.props.selectedIndex > -1,
+    );
     if (prevProps.selectedIndex !== this.props.selectedIndex) {
       // update focus index if selectedIndex changed by property pane
       this.setState({ activeItemIndex: this.props.selectedIndex });
@@ -393,12 +401,13 @@ class DropDownComponent extends React.Component<
       return null;
     }
     const isSelected: boolean = this.isOptionSelected(option);
+    console.log("itemProps", itemProps, isSelected);
     // For tabbable menuItems
     const isFocused = itemProps.modifiers.active;
     return (
       <MenuItem
         active={isSelected}
-        className={`single-select ${isFocused && "is-focused"}`}
+        className={`single-select ${isFocused && isSelected && "is-focused"}`}
         key={option.value}
         onClick={itemProps.handleClick}
         tabIndex={0}
